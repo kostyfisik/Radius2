@@ -1,6 +1,7 @@
 'use client'
-import Sidebar from '@/components/sidebar'
 import { Button } from '@/components/ui/button'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
 import { encodeXor, formatSearch } from '@/lib/utils'
 import { useEffect, useRef, useState } from 'react'
 import store from 'store2'
@@ -73,13 +74,17 @@ export default function Route({ params }: { params: { route: string[] } }) {
       setShortcutted(true)
     }
   }
+  const pathname = usePathname()
+
   return (
     <div>
       <div className="w-screen fixed top-0 h-14 border-b flex items-center justify-between px-4 pr-8">
         <div className="flex items-center gap-3">
-          <Button onClick={() => setOpen(true)} size="icon" variant="ghost">
-            <Lucide.Menu className="h-7 w-7" />
-          </Button>
+          <Link href="/">
+            <Button variant={pathname == '/' ? 'secondary' : 'ghost'} className="justify-start gap-2 w-full hover:scale-105 duration-200 transition-all">
+              <Lucide.Home />
+            </Button>
+          </Link>
           <div className="flex items-center gap-2">
             {tabIcon ? <img src={tabIcon} className="h-8 w-8" /> : <Lucide.Radius className="h-8 w-8 rotate-180" />}
             <h1 className="text-xl font-bold">{tabName ? tabName : 'Radius'}</h1>
@@ -87,23 +92,6 @@ export default function Route({ params }: { params: { route: string[] } }) {
         </div>
         <div className="flex items-center gap-2 z-50">
           <TooltipProvider delayDuration={0}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Lucide.ArrowLeft />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Back</TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Lucide.RotateCw />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Reload</TooltipContent>
-            </Tooltip>
 
             <Tooltip>
               <TooltipTrigger asChild>
@@ -116,7 +104,6 @@ export default function Route({ params }: { params: { route: string[] } }) {
           </TooltipProvider>
         </div>
 
-        <Sidebar open={open} onOpenChange={setOpen} />
       </div>
       <iframe ref={ref} onLoad={handleLoad} className="h-[calc(100vh-3.5rem)] w-full"></iframe>
 

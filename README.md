@@ -22,7 +22,6 @@ Radius is a modern, stylish proxy built on **UV** technology, offering a clean a
 
 - A sleek, minimalist interface
 - Ad-free browsing
-- A variety of proxied games in our exclusive games section!
 
 ### How to Host Radius
 We’re currently working on enabling easy self-hosting options. In the meantime, you can create an iframe to embed the main site for personal use.

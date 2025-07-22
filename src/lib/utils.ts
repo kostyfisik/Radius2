@@ -28,5 +28,5 @@ export function formatSearch(input: string): string {
     if (url.hostname.includes('.')) return url.toString()
   } catch (e) {}
 
-  return new URL(`https://google.com/search?q=${input}`).toString()
+  return new URL(`https://duckduckgo.com/?q=${input}`).toString()
 }
