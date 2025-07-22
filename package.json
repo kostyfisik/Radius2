@@ -33,6 +33,7 @@
     "store2": "^2.14.3",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "universal-cookie": "^8.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {

@@ -8,6 +8,10 @@ import store from 'store2'
 import * as Lucide from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+cookies.set('myCat', 'Pacman', { path: '/' });
+
 interface ContentWindow extends Window {
   __uv$location: Location
 }
