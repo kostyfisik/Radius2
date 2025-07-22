@@ -1,5 +1,4 @@
 'use client'
-import Shortcut from '@/components/shortcut'
 import { Input } from '@/components/ui/input'
 import { Flame, Radius, Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -9,13 +8,6 @@ import store from 'store2'
 
 export default function Home() {
   const router = useRouter()
-  const [shortcuts, setShortcuts] = useState<Item[]>([])
-
-  useEffect(() => {
-    store.set('shortcuts', [], false)
-    const data: Item[] = store('shortcuts')
-    setShortcuts(data)
-  }, [])
 
   return (
     <div>
@@ -37,13 +29,6 @@ export default function Home() {
             <Search className="h-4 w-4 text-muted-foreground absolute top-1/2 -translate-y-1/2 left-3" />
           </div>
         </div>
-        {shortcuts.length > 0 && (
-          <div className="py-2 flex flex-wrap gap-2 justify-center">
-            {shortcuts.map((shortcut: Item) => {
-              return <Shortcut key={shortcut.title} image={shortcut.image} title={shortcut.title} url={shortcut.url} />
-            })}
-          </div>
-        )}
       </div>
     </div>
   )

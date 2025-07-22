@@ -62,31 +62,6 @@ export default function Route({ params }: { params: { route: string[] } }) {
     }
   }, [])
 
-  function triggerShortcut() {
-    store.set('shortcuts', [], false)
-    if (!ref.current || !ref.current.contentWindow) return
-    const contentWindow = ref.current.contentWindow as ContentWindow
-    if (!('__uv$location' in contentWindow)) return
-    const shortcuts: any[] = store('shortcuts')
-
-    if (shortcuts.some((value) => value.url == contentWindow.__uv$location.href)) {
-      store(
-        'shortcuts',
-        shortcuts.filter((value) => value.url !== contentWindow.__uv$location.href)
-      )
-      setShortcutted(false)
-    } else {
-      store('shortcuts', [
-        ...store('shortcuts'),
-        {
-          image: (contentWindow.document.querySelector("link[rel*='icon']") as HTMLLinkElement)?.href || `${contentWindow.__uv$location.origin}/favicon.ico`,
-          title: contentWindow.document.title,
-          url: contentWindow.__uv$location.href
-        }
-      ])
-      setShortcutted(true)
-    }
-  }
 
   function handleLoad() {
     if (!ref.current || !ref.current.contentWindow) return
@@ -95,11 +70,7 @@ export default function Route({ params }: { params: { route: string[] } }) {
     setTabName(contentWindow.document.title)
     setTabIcon((contentWindow.document.querySelector("link[rel*='icon']") as HTMLLinkElement)?.href)
 
-    store.set('shortcuts', [], false)
-    const shortcuts: any[] = store('shortcuts')
-    if (shortcuts.some((value) => value.url == contentWindow.__uv$location.href)) {
-      setShortcutted(true)
-    }
+
   }
   const pathname = usePathname()
 
@@ -117,19 +88,7 @@ export default function Route({ params }: { params: { route: string[] } }) {
             <h1 className="text-xl font-bold">{tabName ? tabName : 'Radius'}</h1>
           </div>
         </div>
-        <div className="flex items-center gap-2 z-50">
-          <TooltipProvider delayDuration={0}>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" onClick={triggerShortcut}>
-                  <Lucide.Star className={shortcutted ? 'fill-foreground' : 'fill-none'} />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Shortcut</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
+       
 
       </div>
       <iframe ref={ref} onLoad={handleLoad} className="h-[calc(100vh-3.5rem)] w-full"></iframe>

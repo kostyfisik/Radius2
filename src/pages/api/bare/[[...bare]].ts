@@ -55,7 +55,11 @@ export const config = {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Создаем bare сервер для каждого запроса с актуальным прокси
-  console.log('============ =>> x-bare-url = ', req.headers['x-bare-url'])
+  console.log('============ =>> x-bare-url has proxy: ',
+     req.headers['x-bare-url']?.includes("proxy"));
+  if (req.headers['x-bare-url']?.includes("proxy")) {
+    console.log("x-bare-url = ", req.headers['x-bare-url'])
+  }
   bare = createBareServerWithProxy(req)
   bare.routeRequest(req, res)
 }
