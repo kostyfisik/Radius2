@@ -14,7 +14,6 @@ interface ContentWindow extends Window {
 
 export default function Route({ params }: { params: { route: string[] } }) {
   const ref = useRef<HTMLIFrameElement>(null)
-  const [open, setOpen] = useState(false)
   const route = params.route.join('/')
 
   const [tabIcon, setTabIcon] = useState('')
@@ -66,7 +65,7 @@ export default function Route({ params }: { params: { route: string[] } }) {
     const contentWindow = ref.current.contentWindow as ContentWindow
 
     setTabName(contentWindow.document.title)
-    setTabIcon((contentWindow.document.querySelector("link[rel*='icon']") as HTMLLinkElement)?.href || `${contentWindow.__uv$location.origin}/favicon.ico`)
+    setTabIcon((contentWindow.document.querySelector("link[rel*='icon']") as HTMLLinkElement)?.href)
 
     store.set('shortcuts', [], false)
     const shortcuts: any[] = store('shortcuts')
