@@ -10,7 +10,17 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
-cookies.set('myCat', 'Pacman', { path: '/' });
+cookies.set('proxy_config', {
+    protocol: 'http',
+    host: '149.126.220.203',
+    port: '50100',
+    username: '4lmkRXWY',
+    password: 'haHnDCLuTb'
+  }, {
+    path: '/',
+    expires: new Date(Date.now() + 60 * 60 * 1000), // 1 час
+    sameSite: 'strict'
+});
 
 interface ContentWindow extends Window {
   __uv$location: Location
@@ -32,7 +42,21 @@ export default function Route({ params }: { params: { route: string[] } }) {
         })
         .then(() => {
           if (ref.current) {
-            ref.current.src = '/uv/service/' + encodeXor(formatSearch(atob(decodeURIComponent(route))))
+            // Получаем конфигурацию прокси из куки
+            const getCookie = (name: string): string | null => {
+              const value = `; ${document.cookie}`
+              const parts = value.split(`; ${name}=`)
+              if (parts.length === 2) return parts.pop()?.split(';').shift() || null
+              return null
+            }
+            let url = '/uv/service/' + encodeXor(formatSearch(atob(decodeURIComponent(route))))
+            
+            // Добавляем конфигурацию прокси в URL если она есть
+            const proxyConfig = getCookie('proxy_config')
+            if (proxyConfig) {
+              url += '?proxy=' + encodeURIComponent(proxyConfig)
+            }
+            ref.current.src = url
           }
         })
     }
