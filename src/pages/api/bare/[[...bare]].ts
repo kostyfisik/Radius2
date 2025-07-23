@@ -14,6 +14,7 @@ const bare =  createBareServer('/api/bare/', {
 
 export const config = {
   api: {
+    responseLimit: false,
     externalResolver: true
   }
 }
