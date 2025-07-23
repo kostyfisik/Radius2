@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { createBareServer } from '@tomphttp/bare-server-node'
 
 
-const bare =  createBareServer('/api/bare/', {
+const bare =  createBareServer('/api/bare/direct/', {
     logErrors: false,
     localAddress: undefined,
     maintainer: {
