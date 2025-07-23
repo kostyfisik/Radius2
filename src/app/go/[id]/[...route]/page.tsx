@@ -23,8 +23,8 @@ export default function Route({ params }: { params: { id: string; route: string[
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register('/uv/${proxyId}/sw.js', {
-          scope: '/uv/service/${proxyId}'
+        .register(`/uv/${proxyId}/sw.js`, {
+          scope: `/uv/service/${proxyId}`
         })
         .then(() => {
           if (ref.current) {
