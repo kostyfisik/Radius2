@@ -23,15 +23,15 @@ export default function Route({ params }: { params: { id: string; route: string[
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register(`/uv/sw.js`, {
-          scope: `/uv/service/`
+        .register(`/uv/direct/sw.js`, {
+          scope: `/uv/direct/service/`
         })
         // .register(`/uv/${proxyId}/sw.js`, {
         //   scope: `/uv/service/${proxyId}`
         // })
         .then(() => {
           if (ref.current) {
-            let url = `/uv/service/` + encodeXor(formatSearch(atob(decodeURIComponent(route))))
+            let url = `/uv/direct/service/` + encodeXor(formatSearch(atob(decodeURIComponent(route))))
             // let url = `/uv/service/${proxyId}/` + encodeXor(formatSearch(atob(decodeURIComponent(route))))
             ref.current.src = url
           }
