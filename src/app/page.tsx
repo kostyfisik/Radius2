@@ -41,7 +41,7 @@ export default function Home() {
               onKeyDown={(e) => {
                 if (e.key !== 'Enter') return
                 store.set('url', e.currentTarget.value)
-                router.push(`/go/${isProxy ? 'proxyID/' : ''}${btoa(e.currentTarget.value)}`)
+                router.push(`/go/${isProxy ? 'someProxyId' : 'direct'}/${btoa(e.currentTarget.value)}`)
               }}
             />
             <Search className="h-4 w-4 text-muted-foreground absolute top-1/2 -translate-y-1/2 left-3" />
