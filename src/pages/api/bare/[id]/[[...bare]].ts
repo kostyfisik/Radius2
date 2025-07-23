@@ -1,7 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { createBareServer } from '@tomphttp/bare-server-node'
+import { proxyManager, ProxyConfig } from '@/lib/proxy-manager'
+
+const proxyConfig =  {
+    protocol: 'http',
+    host: '80.243.141.77',
+    port: 50100,
+    username: 'TxWfUv58',
+    password: 'Z4ADx8b1wR'
+  } as ProxyConfig;
+
 
 function createBareServerId(id: string) {
+  proxyManager.setProxy(proxyConfig)
   return createBareServer(`/api/bare/${id}/`,  {
     logErrors: false,
     localAddress: undefined,
@@ -9,6 +20,8 @@ function createBareServerId(id: string) {
       email: 'contact@proudparrot2.tech',
       website: 'https://github.com/proudparrot2/'
     },
+    httpAgent: proxyManager.getHttpAgent(),
+    httpsAgent: proxyManager.getHttpsAgent() || undefined
   })
 }
 
